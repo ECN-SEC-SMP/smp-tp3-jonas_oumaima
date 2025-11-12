@@ -10,6 +10,9 @@ qui liront et écriront des fichiers PGM
 
 #ifndef __secsmp_chargesauve
 #define __secsmp_chargesauve
+#include <string>
+using namespace std;
+
 /*
 Action ChargeImage(NomImage,Image,Ok)
 Paramètre d'entrée : t-Chaine NomImage
