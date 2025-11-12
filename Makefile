@@ -4,7 +4,7 @@
 CXX := g++
 CXXFLAGS := -Wall -Wextra -std=c++17 -O2
 
-TARGET := entiers_longs
+TARGET := smp-tp3-jonas_oumaima
 
 # Tous les .cpp du répertoire
 SRCS := $(wildcard *.cpp)

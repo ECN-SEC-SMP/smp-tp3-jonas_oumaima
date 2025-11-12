@@ -12,6 +12,7 @@ qui liront et écriront des fichiers PGM
 #define __secsmp_chargesauve
 #include <string>
 using namespace std;
+#include "image.h"
 
 /*
 Action ChargeImage(NomImage,Image,Ok)

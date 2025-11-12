@@ -10,9 +10,7 @@ qui liront et écriront des fichiers PGM
 #include <fstream>
 #include <string>
 using namespace std;
-
 #include "image.h"
-#include "chargesauve.h"
 
 
 /*

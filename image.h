@@ -10,7 +10,7 @@ pour représenter une image au format PGM
 
 #ifndef __secsmp_image
 #define __secsmp_image 
-
+using namespace std;
 //on fixe la taille maximale des images
 const int TMAX = 800;
 
