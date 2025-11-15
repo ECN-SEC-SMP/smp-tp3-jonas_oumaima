@@ -6,7 +6,7 @@
 #include <assert.h>
 using namespace std;
 
-void seuillage(t_Image * image, int s){
+void seuillage(t_Image * image, unsigned int s){
     for (int i = 0; i < image->h; i++ ){
         for (int k = 0; k< image ->w; k++){
             if (image->im[i][k] < s){
