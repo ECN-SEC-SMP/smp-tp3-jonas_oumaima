@@ -13,6 +13,8 @@ int main(){
     t_Image *imagediff1 = new t_Image;
     t_Image *imagediff2 = new t_Image;
     t_Image *imagedilat = new t_Image;
+    t_Image *imageero = new t_Image;
+
 
 
     bool Ok;
@@ -84,9 +86,17 @@ int main(){
     cout << "Premier pixel : " << imagedilat->im[0][0] << endl;
     cout << dilatation(structure,imagedilat);
     savePgm(Nomimage + "_dilatée.pgm",imagedilat);
-
-
-    delete imageseuillage;
     delete imagedilat;
+
+    cout << "Erosion : " <<endl;
+
+    loadPgm(Nomimage + "_seuillée.pgm",imageero,Ok);
+
+    cout << erosion(structure,imageero);
+
+    savePgm(Nomimage + "_erosée.pgm",imageero);
+    delete imageero;
+
+    
     delete structure;
 }
