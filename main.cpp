@@ -14,6 +14,8 @@ int main(){
     t_Image *imagediff2 = new t_Image;
     t_Image *imagedilat = new t_Image;
     t_Image *imageero = new t_Image;
+    t_Image *imageouv = new t_Image;
+    t_Image *imageferm = new t_Image;
 
 
 
@@ -76,6 +78,7 @@ int main(){
     structure->val[2][0]=0;
     structure->val[1][2]=1;
     structure->val[2][1]=1;
+
     cout << endl;
     cout << "Dilatation : " << endl;
     
@@ -88,6 +91,7 @@ int main(){
     savePgm(Nomimage + "_dilatée.pgm",imagedilat);
     delete imagedilat;
 
+    cout << endl;
     cout << "Erosion : " <<endl;
 
     loadPgm(Nomimage + "_seuillée.pgm",imageero,Ok);
@@ -97,6 +101,17 @@ int main(){
     savePgm(Nomimage + "_erosée.pgm",imageero);
     delete imageero;
 
-    
+    cout << endl;
+    cout << "Ouverture : " <<endl;
+
+    ouverture(Nomimage +"_seuillée.pgm",structure,imageouv);
+    delete imageouv;
+
+    cout << endl;
+    cout << "Fermeture : " <<endl;
+
+    fermeture(Nomimage +"_seuillée.pgm",structure,imageferm);
+    delete imageferm;
+
     delete structure;
 }

@@ -35,3 +35,21 @@ string erosion(structelem *structure, t_Image *image){
     return "Erosée !";
     
 }
+
+string ouverture(string Nomimage,structelem *structure, t_Image *image){
+    bool Ok;
+    loadPgm(Nomimage,image, Ok);
+    erosion(structure,image);
+    dilatation(structure,image);
+    savePgm(Nomimage + "_ouverture.pgm",image);
+    return "Ouverture effectuée !";
+} 
+
+string fermeture(string Nomimage,structelem *structure, t_Image *image){
+    bool Ok;
+    loadPgm(Nomimage,image, Ok);
+    dilatation(structure,image);
+    erosion(structure,image);
+    savePgm(Nomimage + "_fermeture.pgm",image);
+    return "Fermeture effectuée !";
+} 
