@@ -13,6 +13,8 @@ int main(){
     t_Image *imagediff1 = new t_Image;
     t_Image *imagediff2 = new t_Image;
     t_Image *imagedilat = new t_Image;
+
+
     bool Ok;
     string Nomimage;
     cout << "Nom de l'image :";
@@ -39,6 +41,8 @@ int main(){
     seuillage(imageseuillage,s);
     cout << "Sauvegarde de la version seuillée..." << endl;
     savePgm(Nomimage + "_seuillée.pgm",  imageseuillage);
+    
+    delete imageseuillage;
 
     cout << endl;
     cout << "Dfférence entre monarch512x512 et mri512x512 pour le pixel (153, 85)  :" << endl;
@@ -51,6 +55,9 @@ int main(){
 
     cout << "La valeur absolue de la différence du niveaux de gris en (153, 85) est : ";
     cout << diff(imagediff1, imagediff2, 153, 85) << endl;
+
+    delete imagediff1;
+    delete imagediff2;
 
     cout << "Définition de votre élément de structure  : " << endl;
     structure->h = 3;
@@ -69,18 +76,17 @@ int main(){
     structure->val[2][1]=1;
     cout << endl;
     cout << "Dilatation : " << endl;
-
+    
     loadPgm(Nomimage + "_seuillée.pgm",imagedilat,Ok);
+
     cout << "structure->h = " << structure->h << ", structure->w = " << structure->w << endl;
     cout << "Taille image : " << imagedilat->h << " x " << imagedilat->w << endl;
     cout << "Premier pixel : " << imagedilat->im[0][0] << endl;
-    cout << dilatation(structure,imagedilat,s);
-    savePgm(Nomimage + "_dilatée",imagedilat);
+    cout << dilatation(structure,imagedilat);
+    savePgm(Nomimage + "_dilatée.pgm",imagedilat);
 
 
     delete imageseuillage;
-    delete imagediff1;
-    delete imagediff2;
     delete imagedilat;
     delete structure;
 }
