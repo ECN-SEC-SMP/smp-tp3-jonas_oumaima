@@ -16,7 +16,10 @@ const int TMAX = 800;
 
 //on définit un type matrice d'entiers 
 //pour rentrer les niveaux de gris des pixels de l'image 
-typedef unsigned int t_MatEnt[TMAX][TMAX]; 
+typedef unsigned int t_MatEnt[TMAX][TMAX];
+
+// Matrice de 1 ou 0
+typedef bool t_MatBool[TMAX][TMAX];
 
 //on définit la structure de données pour représenter une image
 struct t_Image
@@ -25,5 +28,17 @@ struct t_Image
     int h; //hauteur de l'image
 	t_MatEnt im; //tableau des niveaux de gris de l'image
 };
+
+// Structure de l'élément structurant 
+struct structelem{
+	int w; // Largeur de l'élément structurant
+	int h; // Hauteur de l'élément structurant
+	
+	int x; // Position horizontale du centre de l'élément structurant
+	int y; // Position verticale du centre de l'élément structurant
+
+	t_MatBool val; // Valeurs prises par dans l'élément structurant (0 ou 1)
+};
+
 
 #endif
