@@ -3,7 +3,7 @@
   
 
 **Auteurs :** Jonas & Oumaima
-
+https://github.com/ECN-SEC-SMP/smp-tp3-jonas_oumaima/blob/main/Rapport_TP3_Jonas_Oumaima.MD
 **Date :** 2025
 
 **Objectif :** Implémentation d'opérations de filtrage morphologique sur des images PGM
@@ -302,7 +302,7 @@ Pour ```mri512x512.pgm``` et ```moarch512x512.pgm``` :
 
 
 <p align="center">
-  <img src="./image_report/image-1-1.png" alt="resultat_diff1" />
+  <img src="./image_report/image-3.png" alt="resultat_diff1" />
   <img src="./image_report/image-2.png" alt="resultat_diff2" />
 </p>
 
@@ -310,7 +310,7 @@ Pour ```mri512x512.pgm``` et ```moarch512x512.pgm``` :
 $im1(153,85) = 42$ et
 $im2(153,85) = 132$
 
-$$ d = |im1(153,85) -im2(153,85) | = |42-132 | =  90 $$
+$$ d = |im1(153,85) -im2(153,85) | = |42-132| =  90 $$
 
 
 #### Résultat obtenu
