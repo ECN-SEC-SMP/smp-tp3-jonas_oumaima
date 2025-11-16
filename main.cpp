@@ -8,32 +8,24 @@ using namespace std;
 
 int main(){
     int s;
+    bool Ok;
 
     t_Image *imageseuillage = new t_Image;
     t_Image *imagediff1 = new t_Image;
     t_Image *imagediff2 = new t_Image;
+
     t_Image *imagedilat = new t_Image;
     t_Image *imageero = new t_Image;
-    t_Image *imageouv = new t_Image;
-    t_Image *imageferm = new t_Image;
 
 
+    cout << endl;
+    cout << "SEUILLAGE DE L'IMAGE" << endl;
+    cout << endl; 
 
-    bool Ok;
     string Nomimage;
-    cout << "Nom de l'image :";
+    cout << "Nom de l'image  : ";
     cin >> Nomimage;
     string NomimageExt = Nomimage + ".pgm";
-    structelem *structure = new structelem;
-
-    for (int i = 0; i < structure->h; i++){
-        for (int j = 0; j < structure->w; j++){
-            structure->val[i][j] = 0;
-        }
-    }
-    
-        
-
 
     loadPgm(NomimageExt, imageseuillage, Ok);
 
@@ -44,74 +36,94 @@ int main(){
     cin >> s;
     seuillage(imageseuillage,s);
     cout << "Sauvegarde de la version seuillée..." << endl;
-    savePgm(Nomimage + "_seuillée.pgm",  imageseuillage);
+    savePgm("seuillée_" + Nomimage + ".pgm",  imageseuillage);
     
     delete imageseuillage;
 
+    cout << "DIFFERENCE DE NIVEAU DE GRIS ENTRE DEUX IMAGES PAR PIXEL : " << endl;
     cout << endl;
-    cout << "Dfférence entre monarch512x512 et mri512x512 pour le pixel (153, 85)  :" << endl;
-    cout << "monarch512x512.pgm  :";
+    cout << "Différence entre monarch512x512 et mri512x512 pour le pixel (153, 85)  :" << endl;
+    cout << endl;
+    cout << "monarch512x512.pgm  : ";
     loadPgm("monarch512x512.pgm", imagediff1, Ok);
-    cout << "mri512x512  :";
+    cout << "mri512x512  : ";
     loadPgm("mri512x512.pgm", imagediff2, Ok);
+
+    cout << endl;
     cout << "Taille moarch512x512.pgm : "<< imagediff1->w << "x" << imagediff1->h << endl; 
     cout << "Taille mri512x512.pgm : "<< imagediff2->w << "x" << imagediff2->h << endl; 
 
     cout << "La valeur absolue de la différence du niveaux de gris en (153, 85) est : ";
     cout << diff(imagediff1, imagediff2, 153, 85) << endl;
+    cout << endl;
 
     delete imagediff1;
     delete imagediff2;
 
-    cout << "Définition de votre élément de structure  : " << endl;
-    structure->h = 3;
-    structure->w = 3;
-    structure->x = 1;
-    structure->y = 1;
+    cout << "OPERATION DE FILTRAGE MORPHOLOGIQUE :" << endl;
+    cout << endl;
 
-    structure->val[0][0]=0;
-    structure->val[0][1]=1;
-    structure->val[1][1]=1;
-    structure->val[1][0]=1;
-    structure->val[0][2]=0;
-    structure->val[2][2]=0;
-    structure->val[2][0]=0;
-    structure->val[1][2]=1;
-    structure->val[2][1]=1;
+    cout << "Définition de votre élément structurant en croix : " << endl;
+
+    structelem *structure = new structelem;
+    int d;
+    int x;
+    int y;
+
+
+    cout << "Dimension de l'élément structurant : ";
+    cin >> d;
+
+    structure->h = d;
+    structure->w = d;
+
+    for (int i = 0; i < structure->h; i++){
+        for (int j = 0; j < structure->w; j++){
+            structure->val[i][j] = 0;
+        }
+    }
+
+    cout << "Centre de l'élément structurant  : " << endl;
+
+    cout << "x : ";
+    cin >> x;
+    cout << "y : ";
+    cin >> y;
+    
+    
+    structure->x = x;
+    structure->y = y;
+
+    for (int i = 0; i < structure->h; i++) {
+    structure->val[i][i] = 1;
+    structure->val[i][(structure->h)-1-i] = 1;
+    } 
+
+    
 
     cout << endl;
     cout << "Dilatation : " << endl;
     
-    loadPgm(Nomimage + "_seuillée.pgm",imagedilat,Ok);
+    cout << dilatation(structure,NomimageExt,s);
 
-    cout << "structure->h = " << structure->h << ", structure->w = " << structure->w << endl;
-    cout << "Taille image : " << imagedilat->h << " x " << imagedilat->w << endl;
-    cout << "Premier pixel : " << imagedilat->im[0][0] << endl;
-    cout << dilatation(structure,imagedilat);
-    savePgm(Nomimage + "_dilatée.pgm",imagedilat);
-    delete imagedilat;
 
     cout << endl;
     cout << "Erosion : " <<endl;
 
-    loadPgm(Nomimage + "_seuillée.pgm",imageero,Ok);
 
-    cout << erosion(structure,imageero);
-
-    savePgm(Nomimage + "_erosée.pgm",imageero);
-    delete imageero;
+    cout << erosion(structure, NomimageExt,s);
 
     cout << endl;
     cout << "Ouverture : " <<endl;
 
-    ouverture(Nomimage +"_seuillée.pgm",structure,imageouv);
-    delete imageouv;
+    ouverture(structure, NomimageExt, s);
+
 
     cout << endl;
     cout << "Fermeture : " <<endl;
 
-    fermeture(Nomimage +"_seuillée.pgm",structure,imageferm);
-    delete imageferm;
+    fermeture(structure, NomimageExt, s);
 
-    delete structure;
-}
+
+  delete structure; 
+} 

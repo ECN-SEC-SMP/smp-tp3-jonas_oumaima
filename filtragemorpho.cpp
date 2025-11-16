@@ -5,51 +5,132 @@
 using namespace std;
 
 
-string dilatation(structelem *structure, t_Image *image){
-    for (int i = 0; i < image->h; i++ ){
-        for (int k = 0; k< image->w; k++){
-            for (int m = 0; m < structure->h; m++){
-                for (int l = 0; l < structure->w; l++){
-                    if ((image->im[i-(structure->y)+m+1][k-(structure->x)+l+1] > 0) && image->im[i][k] == 0){
-                        image->im[i][k] = 255;
-                    }
-                }
-            }
-        }
-    }  
-    return "Dilatée !";
- }
+string dilatation(structelem *structure, string Nomimage, unsigned int s){
+    bool Ok;
+    t_Image *imageEntree = new t_Image;
+    t_Image *imageSortie = new t_Image;
 
-string erosion(structelem *structure, t_Image *image){
-    for (int i = 0; i < image->h; i++ ){
-        for (int k = 0; k< image->w; k++){
+    loadPgm(Nomimage,imageEntree,Ok);
+    seuillage(imageEntree, s);
+
+    imageSortie->h = imageEntree->h;
+    imageSortie->w = imageEntree->w;
+
+    for (int i = 0; i < imageEntree->h; i++){
+        for (int j = 0; j < imageEntree->w; j++){
+            imageSortie->im[i][j] = 0;
+        }
+    }
+
+
+    for (int i = 0; i < imageEntree->h; i++ ){
+        for (int k = 0; k< imageEntree->w; k++){
             for (int m = 0; m < structure->h; m++){
                 for (int l = 0; l < structure->w; l++){
-                    if ((image->im[i-(structure->y)+m+1][k-(structure->x)+l+1] < 255) && image->im[i][k] == 255){
-                        image->im[i][k] = 0;
+                    if ((imageEntree->im[i-(structure->y)+m+1][k-(structure->x)+l+1] > 0) && structure->val[m][l] == 1){
+                        imageSortie->im[i][k] = 255;
                     }
                 }
             }
         }
-    }  
-    return "Erosée !";
-    
+    }
+
+    savePgm("dilatée_" + Nomimage,imageSortie);  
+    delete imageSortie;
+    delete imageEntree;   
+
+    return "Dilatée !";
 }
 
-string ouverture(string Nomimage,structelem *structure, t_Image *image){
+string erosion(structelem *structure, string Nomimage, unsigned int s){
     bool Ok;
-    loadPgm(Nomimage,image, Ok);
-    erosion(structure,image);
-    dilatation(structure,image);
-    savePgm(Nomimage + "_ouverture.pgm",image);
+    t_Image *imageEntree = new t_Image;
+    t_Image *imageSortie = new t_Image;
+
+    loadPgm(Nomimage,imageEntree,Ok);
+    seuillage(imageEntree, s);
+
+
+    imageSortie->h = imageEntree->h;
+    imageSortie->w = imageEntree->w;
+
+    for (int i = 0; i < imageEntree->h; i++){
+        for (int j = 0; j < imageEntree->w; j++){
+            imageSortie->im[i][j] = 0;
+        }
+    }
+
+    bool filtreactif = false;
+    for (int i = 0; i < imageEntree->h; i++ ){
+        for (int k = 0; k< imageEntree->w; k++){
+            for (int m = 0; m < structure->h; m++){
+                for (int l = 0; l < structure->w; l++){
+                    if ((imageEntree->im[i-(structure->y)+m+1][k-(structure->x)+l+1] == 0) && structure->val[m][l] == 1){
+                        filtreactif = false;
+                        imageSortie->im[i][k] = 0;
+                        break;
+                    }
+                    else{
+                        filtreactif = true;
+                        imageSortie->im[i][k] = 255;
+                    }
+                }
+            if (filtreactif == false){
+                    break;
+                }
+            }
+        }
+    }
+    savePgm("erosée_"+Nomimage,imageSortie);
+    delete imageSortie;
+    delete imageEntree;   
+    return "Erosée !";
+}
+
+string ouverture(structelem *structure, string Nomimage, unsigned int s){
+    bool Ok;
+    t_Image *imageEntree = new t_Image;
+    t_Image *imageSortie = new t_Image;
+
+    loadPgm(Nomimage,imageEntree,Ok);
+
+
+    imageSortie->h = imageEntree->h;
+    imageSortie->w = imageEntree->w;
+
+    for (int i = 0; i < imageEntree->h; i++){
+        for (int j = 0; j < imageEntree->w; j++){
+            imageSortie->im[i][j] = 0;
+        }
+    }
+
+    erosion(structure,Nomimage, s);
+    dilatation(structure, "erosée_" + Nomimage, s);
+    delete imageEntree;
+    delete imageSortie;
     return "Ouverture effectuée !";
 } 
 
-string fermeture(string Nomimage,structelem *structure, t_Image *image){
+string fermeture(structelem *structure, string Nomimage, unsigned int s){
     bool Ok;
-    loadPgm(Nomimage,image, Ok);
-    dilatation(structure,image);
-    erosion(structure,image);
-    savePgm(Nomimage + "_fermeture.pgm",image);
+    t_Image *imageEntree = new t_Image;
+    t_Image *imageSortie = new t_Image;
+
+    loadPgm(Nomimage,imageEntree,Ok);
+
+
+    imageSortie->h = imageEntree->h;
+    imageSortie->w = imageEntree->w;
+
+    for (int i = 0; i < imageEntree->h; i++){
+        for (int j = 0; j < imageEntree->w; j++){
+            imageSortie->im[i][j] = 0;
+        }
+    }
+
+    dilatation(structure,Nomimage, s);
+    erosion(structure,"dilatée_" + Nomimage, s);
+    delete imageEntree;
+    delete imageSortie;
     return "Fermeture effectuée !";
-} 
+}
