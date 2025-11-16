@@ -123,7 +123,7 @@ string ouverture(structelem *structure, string Nomimage, unsigned int s){
 
 
     erosion(structure,Nomimage, s); // Erosion de l'image d'entrée
-    dilatation(structure, "rodée_" + Nomimage, s); // Dilatation de l'image d'entrée érodée
+    dilatation(structure, "érodée_" + Nomimage, s); // Dilatation de l'image d'entrée érodée
     delete imageEntree; // Suppression de l'image d'entrée
     delete imageSortie;// Suppression de l'image de sortie
     return "Ouverture effectuée !";// Validation de l'ouverture

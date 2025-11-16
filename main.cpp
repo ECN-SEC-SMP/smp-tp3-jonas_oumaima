@@ -65,7 +65,7 @@ int main(){
     structelem *structure = new structelem;
     int d;
     int x;
-    int y;
+    int y; 
 
 
     cout << "Dimension de l'élément structurant : ";
@@ -109,19 +109,63 @@ int main(){
 
     cout << erosion(structure, NomimageExt,s) << endl;
 
+
+    delete structure;
+    structelem *structure2 = new structelem;
+    int s2;
+    string Nomimage2;
+    d = 0;
+    t_Image *image2 = new t_Image;
+    
+    cout << "Nom de la seconde image : ";
+    cin >> Nomimage2;
+    string Nomimage2Ext = Nomimage2 + ".pgm";
+    loadPgm(Nomimage2Ext,image2, Ok);
+    cout << "Nouvelle valeur de seuillage :";
+    cin >> s2;
+    seuillage(image2,s2);
+    savePgm("seuillée_" + Nomimage2 + ".pgm",  image2);
+    delete image2;
+    cout << "Dimension du second élément structurant : ";
+    cin >> d;
+
+    
+    structure2->h = d;
+    structure2->w = d;
+
+    cout << "Centre du sencond élément structurant : " << endl;
+
+    cout << "x : ";
+    cin >> x;
+    cout << "y : ";
+    cin >> y;
+    
+    
+    structure2->x = x;
+    structure2->y = y;
+
+    for (int i = 0; i < structure2->h; i++){
+        for (int j = 0; j < structure2->w; j++){
+            structure2->val[i][j] = 0;
+        }
+    }
+
+    for (int i = 0; i < structure2->h; i++) {
+        structure2->val[i][i] = 1;
+        structure2->val[i][(structure2->h)-1-i] = 1;
+    } 
+
+
     cout << endl;
     cout << "Ouverture : " <<endl;
     cout << endl;
 
-    ouverture(structure, NomimageExt, s);
+    cout << ouverture(structure2, Nomimage2Ext, s2) << endl;
 
 
     cout << endl;
     cout << "Fermeture : " <<endl;
     cout << endl;
 
-    fermeture(structure, NomimageExt, s);
-
-
-  delete structure; 
+    cout << fermeture(structure2, Nomimage2Ext, s2) << endl;
 } 

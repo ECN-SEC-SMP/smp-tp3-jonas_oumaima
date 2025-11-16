@@ -1,4 +1,4 @@
-# Compte Rendu TP3 - Traitement d'Images et Morphologie Mathématique
+# Compte Rendu TP3 - Traitement d'Images et Morphologie
 
   
 
@@ -32,7 +32,7 @@
 
   
 
-## 1. Introduction {#introduction}
+## 1. Introduction
 
   
 
@@ -55,7 +55,7 @@ Les opérations implémentées sont :
 
   
 
-## 2. Architecture du projet {#architecture}
+## 2. Architecture du projet
 
 
 ### Structure des fichiers
@@ -63,7 +63,7 @@ Les opérations implémentées sont :
 ```
 
 smp-tp3-jonas_oumaima/
-
+├── image_report/ # Dossier d'image pour le rapport
 ├── main.cpp # Programme principal et tests
 ├── image.h # Structures de données (t_Image, structelem)
 ├── chargesauve.h/.cpp # Chargement/sauvegarde images PGM
@@ -110,7 +110,7 @@ struct structelem{
 
 ---
 
-## 3. Fonctionnalités implémentées {#fonctionnalités}
+## 3. Fonctionnalités implémentées
 
 ### 3.1 Seuillage
 
@@ -239,7 +239,7 @@ for (int i = 0; i < imageEntree->h; i++ ){ // Déplacement sur la hauteur de l'i
 ---
 
 
-## 4. Jeux d'essai et résultats {#jeux-dessai}
+## 4. Jeux d'essai et résultats 
 
 ### 🧪 Test 1 : Seuillage d'image
 
@@ -258,9 +258,12 @@ Les pixels de niveau de gris ≥ 120 deviennent blancs (255)
 
 
 #### Résultat obtenu
-![resultat_seuillage](image.png)
-```
+<p align="center">
+  <img src="./image_report/image.png" alt="resultat_seuillage" />
+</p>
 
+Réponse CMD :
+```
 SEUILLAGE DE L'IMAGE :
 
 Nom de l'image  : paysage
@@ -285,7 +288,7 @@ sauvegarde terminée.
 **Objectif :** Vérifier le calcul de différence entre deux images différentes.
 
 #### Données d'entrée
-- **Image 1 :** `monarch512x512.pgm` (papillon)
+- **Image 1 :** `moarch512x512.pgm` (papillon)
 - **Image 2 :** `mri512x512.pgm` (IRM cérébrale)
 - **Pixel testé :** (153, 85)
 
@@ -293,33 +296,38 @@ sauvegarde terminée.
 
 #### Résultat attendu
 
-Une valeur absolue de différence > 0 (images très différentes)
+Via GIMP on recupère les valeur du pixel (153, 85) des deux images  :
+
+Pour ```mri512x512.pgm``` et ```moarch512x512.pgm``` :
+
+
+<p align="center">
+  <img src="./image_report/image-1-1.png" alt="resultat_diff1" />
+  <img src="./image_report/image-2.png" alt="resultat_diff2" />
+</p>
 
   
+$im1(153,85) = 42$ et
+$im2(153,85) = 132$
+
+$$ d = |im1(153,85) -im2(153,85) | = |42-132 | =  90 $$
+
 
 #### Résultat obtenu
 
 ```
 
-DIFFERENCE DE NIVEAU DE GRIS ENTRE DEUX IMAGES PAR PIXEL :
+DIFFERENCE DE NIVEAU DE GRIS ENTRE DEUX IMAGES PAR PIXEL : 
 
-  
+Différence entre monarch512x512 et mri512x512 pour le pixel (153, 85)  :
 
-Différence entre monarch512x512 et mri512x512 pour le pixel (153, 85) :
-
-  
-
-monarch512x512.pgm : chargement terminé.
-
-mri512x512 : chargement terminé.
-
-  
+monarch512x512.pgm  : chargement terminé.
+mri512x512  : chargement terminé.
 
 Taille moarch512x512.pgm : 512x512
-
 Taille mri512x512.pgm : 512x512
-
 La valeur absolue de la différence du niveaux de gris en (153, 85) est : 90
+
 
 ```
 
@@ -328,12 +336,9 @@ La valeur absolue de la différence du niveaux de gris en (153, 85) est : 90
 #### ✅ Validation
 
 - Les deux images ont bien les mêmes dimensions (assertion validée)
-
-- La fonction `diff()` retourne une valeur absolue positive
-
+- La fonction `diff()` retourne bien la difference positive des niveau de gris (90)
 - Pas de dépassement de tableau
 
-  
 
 ---
 
@@ -349,29 +354,27 @@ La valeur absolue de la différence du niveaux de gris en (153, 85) est : 90
 
 #### Paramètres d'entrée
 
-- **Image :** `monarch512x512.pgm`
+```
+Définition de votre élément structurant en croix : 
+Dimension de l'élément structurant : 3
+Centre de l'élément structurant  : 
+x : 1
+y : 1
+```
+- **Image :** `paysage.pgm`
+- **Seuil :** `120`
+- **Élément structurant :** Croix de dimension 3×3
+- **Centre :** (1, 1)
 
-- **Seuil :** `128`
-
-- **Élément structurant :** Croix de dimension 5×5
-
-- **Centre :** (2, 2)
-
-  
 
 ```
 
 Structure de l'ES (visualisation) :
 
-0 0 1 0 0
+1 0 1 
+0 1 0
+1 0 1
 
-0 1 0 1 0
-
-1 0 X 0 1 (X = centre)
-
-0 1 0 1 0
-
-0 0 1 0 0
 
 ```
 
@@ -380,100 +383,88 @@ Structure de l'ES (visualisation) :
 #### Résultat obtenu
 
 ```
-
-Définition de votre élément structurant en croix :
-
-Dimension de l'élément structurant : 5
-
-Centre de l'élément structurant :
-
-x : 2
-
-y : 2
-
-  
-
-Dilatation :
+Dilatation : 
 
 chargement terminé.
-
 sauvegarde terminée.
-
 Dilatée !
-
 ```
 
   
 
-**Fichier généré :** `dilatée_monarch512x512.pgm`
+**Fichier généré :** `dilatée_paysage.pgm`
 
-  
+<p align="center">
+  <img src="./image_report/image-4.png" alt="resultat_dilatation" />
+</p>
 
 #### ✅ Validation
 
-- Les zones blanches (papillon) sont agrandies
-
-- Les détails fins deviennent plus épais
-
+- Les zones blanches sont agrandies
+- On remarque le paterne de l'élément structurant 
 - Les petits trous noirs sont comblés
-
 - L'image reste dans les dimensions originales
-
-  
 
 ---
 
-  
 
 ### 🧪 Test 4 : Érosion avec élément structurant en croix
 
-  
 
 **Objectif :** Réduire les zones blanches d'une image binaire.
 
-  
 
-#### Paramètres (identiques au Test 3)
+- **Image :** `paysage.pgm`
+- **Seuil :** `120`
+- **Élément structurant :** Croix de dimension 3×3
+- **Centre :** (1, 1)
 
-- **Image :** `monarch512x512.pgm`
 
-- **Seuil :** `128`
+```
 
-- **ES :** Croix 5×5, centre (2,2)
+Structure de l'ES (visualisation) :
+
+1 0 1 
+0 1 0
+1 0 1
+
+```
 
   
 
 #### Résultat obtenu
 
 ```
-
-Erosion :
+Erosion : 
 
 chargement terminé.
-
 sauvegarde terminée.
-
 Erodée !
-
 ```
 
   
 
-**Fichier généré :** `érodée_monarch512x512.pgm`
+**Fichier généré :** `érodée_paysage.pgm`
 
+
+
+
+<p align="center">
+  <img src="./image_report/image-5.png" alt="resultat_erosion" />
+</p>
   
 
 #### ✅ Validation
 
 - Les zones blanches sont réduites
-
 - Les petits détails blancs disparaissent
-
 - Les contours sont érodés uniformément
-
 - Les grandes structures restent visibles
 
-  
+#### ❓ Questionnement 
+
+- Les trous noirs sont plus gros dans la grande zone blanche
+- Il reste certains trous blancs dans les zones noires
 
 ---
 
@@ -488,19 +479,37 @@ Erodée !
   
 
 #### Paramètres
+``` 
+Nom de la seconde image : monarch512x512
+chargement terminé.
+Nouvelle valeur de seuillage :140
+sauvegarde terminée.
+Dimension du second élément structurant : 5
+Centre du sencond élément structurant : 
+x : 2
+y : 2
 
+```
 - **Image :** `monarch512x512.pgm`
+- **Seuil :** `140`
+- **Élément structurant :** Croix de dimension 5×5
+- **Centre :** (2, 2)
 
-- **Seuil :** `128`
+```
+Structure de l'ES (visualisation) :
 
-- **ES :** Croix 5×5
+1 0 0 0 1
+0 1 0 1 0
+0 0 1 0 0
+0 1 0 1 0
+1 0 0 0 1
+```
 
   
 
 #### Processus
 
 1. **Érosion** → supprime les petits détails
-
 2. **Dilatation** → restaure la taille des grandes structures
 
   
@@ -508,21 +517,13 @@ Erodée !
 #### Résultat obtenu
 
 ```
-
-Ouverture :
-
-chargement terminé.
-
-sauvegarde terminée.
-
-Erodée !
+Ouverture : 
 
 chargement terminé.
-
+chargement terminé.
 sauvegarde terminée.
-
-Dilatée !
-
+chargement terminé.
+sauvegarde terminée.
 Ouverture effectuée !
 
 ```
@@ -531,40 +532,46 @@ Ouverture effectuée !
 
 **Fichier généré :** `dilatée_érodée_monarch512x512.pgm`
 
-  
+<p align="center">
+  <img src="./image_report/image-6.png" alt="resultat_ouverture" />
+</p>
 
 #### ✅ Validation
 
-- Petits pixels blancs isolés supprimés
-
+- La plupart des pixels blancs isolés sont supprimés
 - Forme globale du papillon préservée
-
 - Contours légèrement lissés
 
-- Bruit blanc éliminé efficacement
+#### ❓ Questionnement 
 
-  
+- Le paterne de l'ES est très visible
+- Il reste quelques pixels blancs isolés
 
 ---
 
-  
 
 ### 🧪 Test 6 : Fermeture (comblement des trous noirs)
 
-  
 
 **Objectif :** Combler les petits trous noirs dans les zones blanches.
 
   
-
 #### Paramètres
 
 - **Image :** `monarch512x512.pgm`
+- **Seuil :** `140`
+- **Élément structurant :** Croix de dimension 5×5
+- **Centre :** (2, 2)
 
-- **Seuil :** `128`
+```
+Structure de l'ES (visualisation) :
 
-- **ES :** Croix 5×5
-
+1 0 0 0 1
+0 1 0 1 0
+0 0 1 0 0
+0 1 0 1 0
+1 0 0 0 1
+```
   
 
 #### Processus
@@ -578,21 +585,13 @@ Ouverture effectuée !
 #### Résultat obtenu
 
 ```
-
-Fermeture :
-
-chargement terminé.
-
-sauvegarde terminée.
-
-Dilatée !
+Fermeture : 
 
 chargement terminé.
-
+chargement terminé.
 sauvegarde terminée.
-
-Erodée !
-
+chargement terminé.
+sauvegarde terminée.
 Fermeture effectuée !
 
 ```
@@ -601,24 +600,21 @@ Fermeture effectuée !
 
 **Fichier généré :** `érodée_dilatée_monarch512x512.pgm`
 
-  
+<p align="center">
+  <img src="./image_report/image-7.png" alt="resultat_fermeture" />
+</p>
 
 #### ✅ Validation
 
 - Petits trous noirs comblés
-
 - Zones blanches deviennent plus homogènes
-
 - Contours légèrement arrondis
-
 - Structure globale maintenue
-
   
-
 ---
 
 
-## 5. Conclusion {#conclusion}
+## 5. Conclusion
 
   
 ### Objectifs atteints ✅
