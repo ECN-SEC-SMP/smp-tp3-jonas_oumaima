@@ -14,9 +14,6 @@ int main(){
     t_Image *imagediff1 = new t_Image;
     t_Image *imagediff2 = new t_Image;
 
-    t_Image *imagedilat = new t_Image;
-    t_Image *imageero = new t_Image;
-
 
     cout << endl;
     cout << "SEUILLAGE DE L'IMAGE" << endl;
@@ -99,28 +96,29 @@ int main(){
     structure->val[i][(structure->h)-1-i] = 1;
     } 
 
-    
-
     cout << endl;
     cout << "Dilatation : " << endl;
-    
+    cout << endl;
+
     cout << dilatation(structure,NomimageExt,s);
 
 
     cout << endl;
     cout << "Erosion : " <<endl;
+    cout << endl;
 
-
-    cout << erosion(structure, NomimageExt,s);
+    cout << erosion(structure, NomimageExt,s) << endl;
 
     cout << endl;
     cout << "Ouverture : " <<endl;
+    cout << endl;
 
     ouverture(structure, NomimageExt, s);
 
 
     cout << endl;
     cout << "Fermeture : " <<endl;
+    cout << endl;
 
     fermeture(structure, NomimageExt, s);
 
