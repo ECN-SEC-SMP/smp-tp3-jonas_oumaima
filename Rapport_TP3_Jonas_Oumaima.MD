@@ -303,7 +303,7 @@ Pour ```mri512x512.pgm``` et ```moarch512x512.pgm``` :
 
 <p align="center">
   <img src="./image_report/image-1-1.png" alt="resultat_diff1" />
-  <img src="./image_report/image-2.png" alt="resultat_diff2" />
+  <img src="./image_report/image-3.png" alt="resultat_diff2" />
 </p>
 
   
